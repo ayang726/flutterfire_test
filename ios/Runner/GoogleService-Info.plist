@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>531286163211-i5i6ej6i2a7o6om0bg0bslgvlclpaddt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.531286163211-i5i6ej6i2a7o6om0bg0bslgvlclpaddt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBeMFUFRgNtLNra4A9ppAaXfS_EEqtQKRo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>531286163211</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vera.flutterfiretest</string>
+	<key>PROJECT_ID</key>
+	<string>flutterfire-test-11b98</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutterfire-test-11b98.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:531286163211:ios:58ada9b2a0095340c9ec0e</string>
+	<key>DATABASE_URL</key>
+	<string>https://flutterfire-test-11b98.firebaseio.com</string>
+</dict>
+</plist>
