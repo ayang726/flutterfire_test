@@ -19,7 +19,7 @@ class _LogInState extends State<LogIn> {
     _auth.loginWithEmailAndPassword(email, password).then((value) {
       print('user $value signed in');
     }).catchError((e) {
-      print(e.toString());
+      print('login error: $e.toString()');
     });
   }
 
@@ -28,7 +28,6 @@ class _LogInState extends State<LogIn> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Log In'),
-        backgroundColor: Colors.green,
         actions: <Widget>[
           FlatButton(
             child: Text('Sign Up'),

@@ -10,12 +10,12 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Firebase Auth'),
-        backgroundColor: Colors.green,
+        // backgroundColor: Colors.green,
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
             label: Text('Log Out'),
-            onPressed: _auth.logout,
+            onPressed: handleLogout,
           )
         ],
       ),
@@ -23,5 +23,10 @@ class Home extends StatelessWidget {
         child: Text('Welcome to Vera, you have logged in'),
       ),
     );
+  }
+
+  void handleLogout() {
+    print('singing out');
+    _auth.logout();
   }
 }
