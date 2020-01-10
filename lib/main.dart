@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterfire_test/screens/authWrapper.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
 
 void main() => runApp(MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Firebase Auth'),
+      home: AuthWrapper(),
     );
   }
 }
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String userUid = '';
   String emailInput = '';
   String passwordInput = '';
-  Authentication _auth = Authentication();
+  AuthService _auth = AuthService();
 
   void handleSignUp() {
     print('Sign up Pressed');
