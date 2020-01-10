@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterfire_test/services/authentication/firebaseAuth.dart';
+import 'package:flutterfire_test/services/firebaseAuth.dart';
 
 void main() => runApp(MyApp());
 
