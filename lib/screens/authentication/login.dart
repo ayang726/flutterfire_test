@@ -53,6 +53,19 @@ because we don't have a app id for ios. and haven't set up for android*/
     });
   }
 
+  void _handleSigninAnon() {
+    setState(() {
+      loading = true;
+    });
+    _auth.signInAnonymous().then(print).catchError((e) {
+      setState(() {
+        loading = false;
+        error = e.message;
+      });
+      print('login error: $e.toString()');
+    });
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -140,7 +153,8 @@ because we don't have a app id for ios. and haven't set up for android*/
             ),
             floatingActionButton: FloatingActionButton(
               child: Icon(Icons.link_off),
-              onPressed: _auth.signInAnonymous,
+              tooltip: 'Sign in Anonymously',
+              onPressed: _handleSigninAnon,
             ),
           );
   }
