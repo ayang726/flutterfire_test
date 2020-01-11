@@ -12,13 +12,18 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   var email = '';
   var password = '';
+  var error = '';
 
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
+  final _authFormKey = GlobalKey<FormState>();
 
-  void handleSignup() {
+  void _handleSignup() {
     _auth.signupWithEmailAndPassword(email, password).then((value) {
       print('user $value signed in');
     }).catchError((e) {
+      setState(() {
+        error = e.message;
+      });
       print('signup error: $e.toString()');
     });
   }
@@ -39,19 +44,22 @@ class _SignUpState extends State<SignUp> {
       body: Container(
         padding: EdgeInsets.all(50),
         child: Form(
+          key: _authFormKey,
           child: Column(
             children: <Widget>[
               TextFormField(
+                autocorrect: false,
                 decoration: InputDecoration(
                   labelText: 'Email',
                 ),
                 keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
                 onChanged: (value) {
                   setState(() {
                     email = value;
                   });
                 },
+                validator: (value) =>
+                    value.isEmpty ? "Email cannot be empty" : null,
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -64,10 +72,21 @@ class _SignUpState extends State<SignUp> {
                     password = value;
                   });
                 },
+                validator: (value) => value.length < 6
+                    ? "Password must be 6 characters or more"
+                    : null,
+              ),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red),
               ),
               RaisedButton(
                 child: Text('Submit'),
-                onPressed: handleSignup,
+                onPressed: () {
+                  if (_authFormKey.currentState.validate()) {
+                    _handleSignup();
+                  }
+                },
               ),
             ],
           ),
