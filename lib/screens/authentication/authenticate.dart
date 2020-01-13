@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_test/screens/authentication/login.dart';
+import 'package:flutterfire_test/screens/authentication/passwordlessSignin.dart';
 import 'package:flutterfire_test/screens/authentication/signup.dart';
 
 class Authenticate extends StatefulWidget {
@@ -8,19 +9,51 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
-  bool showSignupScreen = false;
+  // bool showSignupScreen = false;
+
+  LoginMethod loginMethod = LoginMethod.loginWithEmailAndPasssword;
+
   void toggleSignup() {
     // print(showSignupScreen.toString());
-    setState(() => {showSignupScreen = !showSignupScreen});
+    setState(() => {
+          if (loginMethod == LoginMethod.loginWithEmailAndPasssword)
+            {loginMethod = LoginMethod.signupWithEmailAndPassword}
+          else if (loginMethod == LoginMethod.signupWithEmailAndPassword)
+            {loginMethod = LoginMethod.loginWithEmailAndPasssword}
+        });
   }
 
+  void togglePasswordlessLogin() {
+    setState(() {
+      if (loginMethod != LoginMethod.passwordlessLogin) {
+        loginMethod = LoginMethod.passwordlessLogin;
+      } else {
+        loginMethod = LoginMethod.loginWithEmailAndPasssword;
+      }
+    });
+  }
+
+  void gotoAuthScreenWith(LoginMethod method) {
+    setState(() {
+      loginMethod = method;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (showSignupScreen) {
-      return SignUp(toggleSignup: this.toggleSignup);
-    } else {
-      return LogIn(toggleSignup: this.toggleSignup);
+    switch (loginMethod) {
+      case LoginMethod.signupWithEmailAndPassword:
+        return SignUp(gotoAuthMethod: gotoAuthScreenWith);
+      case LoginMethod.loginWithEmailAndPasssword:
+        return LogIn(gotoAuthMethod: gotoAuthScreenWith);
+      case LoginMethod.passwordlessLogin:
+        return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
     }
   }
+}
+
+enum LoginMethod {
+  signupWithEmailAndPassword,
+  loginWithEmailAndPasssword,
+  passwordlessLogin
 }

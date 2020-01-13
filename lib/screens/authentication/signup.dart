@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
 import 'package:flutterfire_test/widgets/spinner.dart';
 
+import 'authenticate.dart';
+
 class SignUp extends StatefulWidget {
-  final Function toggleSignup;
-  SignUp({this.toggleSignup});
+  final Function gotoAuthMethod;
+  SignUp({this.gotoAuthMethod});
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -40,6 +42,19 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  void _handleSigninAnon() {
+    setState(() {
+      loading = true;
+    });
+    _auth.signInAnonymous().then(print).catchError((e) {
+      setState(() {
+        loading = false;
+        error = e.message;
+      });
+      print('login error: $e.toString()');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -51,7 +66,8 @@ class _SignUpState extends State<SignUp> {
               actions: <Widget>[
                 FlatButton(
                   child: Text('Log In'),
-                  onPressed: widget.toggleSignup,
+                  onPressed: () => widget
+                      .gotoAuthMethod(LoginMethod.loginWithEmailAndPasssword),
                 ),
               ],
             ),
@@ -108,6 +124,11 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.link_off),
+              tooltip: 'Sign in Anonymously',
+              onPressed: _handleSigninAnon,
             ),
           );
   }
