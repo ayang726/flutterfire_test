@@ -28,7 +28,7 @@ class _LogInState extends State<LogIn> {
         loading = true;
       });
       _auth.loginWithEmailAndPassword(email, password).then((value) {
-        print('user $value signed in');
+        print('message-900 user ${value.name} signed in');
       }).catchError((e) {
         setState(() {
           loading = false;

@@ -11,31 +11,36 @@ class AuthService {
 
   User userFromFirebaseUser(FirebaseUser user) {
     if (user != null)
-      return User(uid: user.uid, email: user.email);
+      return User(uid: user.uid, name: user.displayName, email: user.email);
     else
       return null;
   }
 
-  Future<String> signInAnonymous() async {
+  Future<User> signInAnonymous() async {
     AuthResult result = await _auth.signInAnonymously();
     // print(result);
-    return result.user.uid;
+    return userFromFirebaseUser(result.user);
   }
 
-  Future<String> signupWithEmailAndPassword(
-      String email, String password) async {
+  Future<User> signupWithEmailAndPassword(
+      String name, String email, String password) async {
     AuthResult result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     // print(result);
-    return result.user.uid;
+    // add name to user in firebase
+    UserUpdateInfo userInfo = UserUpdateInfo();
+    userInfo.displayName = name;
+    result.user.updateProfile(userInfo);
+    // print(result.user.displayName);
+    return userFromFirebaseUser(result.user);
   }
 
-  Future<String> loginWithEmailAndPassword(
+  Future<User> loginWithEmailAndPassword(
       String email, String password) async {
     AuthResult result = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
     // print(result);
-    return result.user.uid;
+    return userFromFirebaseUser(result.user);
   }
 
   Future logout() async {

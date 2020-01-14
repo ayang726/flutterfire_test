@@ -13,12 +13,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  var name = '';
   var email = '';
   var password = '';
   var error = '';
   var loading = false;
   // var formIsValid = false;
 
+  final _nameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
@@ -30,8 +32,8 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         loading = true;
       });
-      _auth.signupWithEmailAndPassword(email, password).then((value) {
-        print('user $value signed in');
+      _auth.signupWithEmailAndPassword(name, email, password).then((value) {
+        print('user $name signed in');
       }).catchError((e) {
         setState(() {
           loading = false;
@@ -77,6 +79,23 @@ class _SignUpState extends State<SignUp> {
                 key: _authFormKey,
                 child: Column(
                   children: <Widget>[
+                    TextFormField(
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                      ),
+                      focusNode: _nameFocusNode,
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
+                      },
+                      onFieldSubmitted: (_) => FocusScope.of(context)
+                          .requestFocus(_emailFocusNode),
+                      textInputAction: TextInputAction.next,
+                      validator: (value) =>
+                          value.isEmpty ? "Name cannot be empty" : null,
+                    ),
                     TextFormField(
                       autocorrect: false,
                       decoration: InputDecoration(

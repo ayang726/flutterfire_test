@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "531286163211",
+    "firebase_url": "https://flutterfire-test-11b98.firebaseio.com",
+    "project_id": "flutterfire-test-11b98",
+    "storage_bucket": "flutterfire-test-11b98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531286163211:android:81140592155a1e7dc9ec0e",
+        "android_client_info": {
+          "package_name": "com.vera.flutterfire_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531286163211-9gdlvipi91r6jlu8b74t1chkjat3b4g2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfi-4cuI0jCFfmYi8zhC18mD8RHt1dbbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531286163211-9gdlvipi91r6jlu8b74t1chkjat3b4g2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "531286163211-i5i6ej6i2a7o6om0bg0bslgvlclpaddt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vera.flutterfiretest",
+                "app_store_id": "962194608"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
