@@ -3,15 +3,15 @@ import 'package:flutterfire_test/screens/authentication/authenticate.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
 import 'package:flutterfire_test/widgets/spinner.dart';
 
-class LogIn extends StatefulWidget {
+class PasswordlessLogin extends StatefulWidget {
   final Function gotoAuthMethod;
-  LogIn({this.gotoAuthMethod});
+  PasswordlessLogin({this.gotoAuthMethod});
 
   @override
-  _LogInState createState() => _LogInState();
+  _PasswordlessLoginState createState() => _PasswordlessLoginState();
 }
 
-class _LogInState extends State<LogIn> {
+class _PasswordlessLoginState extends State<PasswordlessLogin> {
   var email = '';
   var password = '';
   var error = '';
@@ -22,14 +22,15 @@ class _LogInState extends State<LogIn> {
   AuthService _auth = AuthService();
   final _authFormKey = GlobalKey<FormState>();
 
-  void _handleLogIn() {
+/* These two methods are for passwordless signin functionalities, so far it doesn't work
+because we don't have a app id for ios. and haven't set
+ up for android*/
+  void _handlePasswordlessLogin() {
     if (_authFormKey.currentState.validate()) {
       setState(() {
         loading = true;
       });
-      _auth.loginWithEmailAndPassword(email, password).then((value) {
-        print('message-900 user ${value.name} signed in');
-      }).catchError((e) {
+      _auth.loginWithEmailAndLink(email).then(print).catchError((e) {
         setState(() {
           loading = false;
           error = e.message;
@@ -53,18 +54,19 @@ class _LogInState extends State<LogIn> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _auth.retrieveDynamicLink(email: email);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return loading
         ? LoadingSpinner()
         : Scaffold(
             appBar: AppBar(
-              title: Text('Log In'),
-              actions: <Widget>[
-                FlatButton(
-                    child: Text('Sign Up'),
-                    onPressed: () => widget.gotoAuthMethod(
-                        LoginMethod.signupWithEmailAndPassword)),
-              ],
+              title: Text('Passwordless Login'),
             ),
             body: Column(
               children: <Widget>[
@@ -94,41 +96,23 @@ class _LogInState extends State<LogIn> {
                           validator: (value) =>
                               value.isEmpty ? "Email cannot be empty" : null,
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                          ),
-                          focusNode: _passwordFocusNode,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          onChanged: (value) {
-                            setState(() {
-                              password = value;
-                            });
-                          },
-                          onFieldSubmitted: (_) => {_handleLogIn()},
-                          textInputAction: TextInputAction.send,
-                          validator: (value) => value.isEmpty
-                              ? "Password must not be empty"
-                              : null,
-                        ),
                         Text(
                           error,
                           style: TextStyle(color: Colors.red),
                         ),
                         RaisedButton(
                           child: Text('Submit'),
-                          onPressed: _handleLogIn,
+                          onPressed: _handlePasswordlessLogin,
                         ),
                       ],
                     ),
                   ),
                 ),
-                Text('Or try login with an email link'),
+                Text('Log in with email and password'),
                 RaisedButton(
-                  child: Text("Passwordless Signin"),
-                  onPressed: () =>
-                      widget.gotoAuthMethod(LoginMethod.passwordlessLogin),
+                  child: Text("Password Login"),
+                  onPressed: () => widget
+                      .gotoAuthMethod(LoginMethod.loginWithEmailAndPasssword),
                 )
               ],
             ),
