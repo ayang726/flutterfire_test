@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_test/screens/authentication/authenticate.dart';
+import 'package:flutterfire_test/screens/authentication/resetPassword.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
 import 'package:flutterfire_test/widgets/spinner.dart';
 
@@ -120,6 +121,12 @@ class _LogInState extends State<LogIn> {
                           child: Text('Submit'),
                           onPressed: _handleLogIn,
                         ),
+                        FlatButton(
+                          child: Text('Forgot password?', style: TextStyle(color: Colors.blue)),
+                          onPressed: () => widget.gotoAuthMethod(
+                            LoginMethod.resetPassword
+                          ),
+                        )
                       ],
                     ),
                   ),

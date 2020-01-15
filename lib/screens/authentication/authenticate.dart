@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_test/screens/authentication/login.dart';
 import 'package:flutterfire_test/screens/authentication/passwordlessSignin.dart';
+import 'package:flutterfire_test/screens/authentication/resetPassword.dart';
 import 'package:flutterfire_test/screens/authentication/signup.dart';
 
 class Authenticate extends StatefulWidget {
@@ -48,6 +49,8 @@ class _AuthenticateState extends State<Authenticate> {
         return LogIn(gotoAuthMethod: gotoAuthScreenWith);
       case LoginMethod.passwordlessLogin:
         return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
+      case LoginMethod.resetPassword:
+        return ResetPassword(goToAuthMethod: gotoAuthScreenWith);
     }
   }
 }
@@ -55,5 +58,6 @@ class _AuthenticateState extends State<Authenticate> {
 enum LoginMethod {
   signupWithEmailAndPassword,
   loginWithEmailAndPasssword,
-  passwordlessLogin
+  passwordlessLogin,
+  resetPassword
 }
