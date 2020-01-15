@@ -27,13 +27,15 @@ class _ResetPassword extends State<ResetPassword> {
           emailSent = true;
         });
         print('Password reset email sent to $email');
+      // check if email exists in database first
       }).catchError((e) {
         setState(() {
           error = 'There is no user corresponding to the given email.';
         });
         print('User not found: $email');
-      }, test: (e) => e is PlatformException
-      ).catchError((e) {
+      }, test: (e) => e is PlatformException)
+      // all other errors
+      .catchError((e) {
         setState(() {
           error = e.message;
         });
