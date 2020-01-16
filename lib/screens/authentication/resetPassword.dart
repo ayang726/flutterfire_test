@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterfire_test/screens/authentication/authenticate.dart';
 
 import 'package:flutterfire_test/services/firebaseAuth.dart';
-import 'package:flutterfire_test/widgets/spinner.dart';
+import 'package:flutterfire_test/widgets/loading.dart';
 
 import 'authBtn.dart';
 import 'inputTextFormField.dart';
@@ -60,7 +60,7 @@ class _ResetPassword extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return LoadingSpinner();
+      return LoadingScreen();
     } else {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -69,7 +69,7 @@ class _ResetPassword extends State<ResetPassword> {
               child: Icon(Icons.arrow_left),
               onPressed: _handleLogin,
               foregroundColor: Colors.white,
-              backgroundColor: const Color(0xFF0078A2),
+              backgroundColor: const Color(0xFF3FABAD),
               tooltip: 'Back to Log In',
             ),
             body: SingleChildScrollView(
@@ -121,7 +121,7 @@ class _ResetPassword extends State<ResetPassword> {
                               AuthBtn(
                                 text: 'Email me a recovery link',
                                 btnColor: Colors.white,
-                                textColor: const Color(0xFF0078A2),
+                                textColor: const Color(0xFF3FABAD),
                                 onPressed: _handleResetPassword,
                               ),
                               Text(

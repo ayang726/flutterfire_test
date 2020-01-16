@@ -33,7 +33,7 @@ class InputTextFormField extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             labelText: labelText,
-            labelStyle: TextStyle(fontSize: 20),
+            labelStyle: TextStyle(fontSize: 20, color: Color(0xFFBEBEBE)),
             errorStyle: TextStyle(fontSize: 15)),
         focusNode: focusNode,
         obscureText: obscureText,

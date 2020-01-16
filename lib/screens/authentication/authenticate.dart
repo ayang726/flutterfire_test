@@ -40,26 +40,21 @@ class _AuthenticateState extends State<Authenticate> {
     });
   }
 
-  final V2 = false;
   @override
   Widget build(BuildContext context) {
-    if (V2) {
-      return Login();
-    } else {
-      switch (_loginMethod) {
-        case LoginMethod.signupWithEmailAndPassword:
-          return Signup(navigateTo: gotoAuthScreen);
-          break;
-        case LoginMethod.loginWithEmailAndPasssword:
-          return Login(navigateTo: gotoAuthScreen);
-          break;
+    switch (_loginMethod) {
+      case LoginMethod.signupWithEmailAndPassword:
+        return Signup(navigateTo: gotoAuthScreen);
+        break;
+      case LoginMethod.loginWithEmailAndPasssword:
+        return Login(navigateTo: gotoAuthScreen);
+        break;
 
-        // case LoginMethod.passwordlessLogin:
-        //   return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
-        case LoginMethod.resetPassword:
-          return ResetPassword(navigateTo: gotoAuthScreen);
-          break;
-      }
+      // case LoginMethod.passwordlessLogin:
+      //   return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
+      case LoginMethod.resetPassword:
+        return ResetPassword(navigateTo: gotoAuthScreen);
+        break;
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_test/screens/authentication/authenticate.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
-import 'package:flutterfire_test/widgets/spinner.dart';
+import 'package:flutterfire_test/widgets/loading.dart';
 
 class PasswordlessLogin extends StatefulWidget {
   final Function gotoAuthMethod;
@@ -63,7 +63,7 @@ because we don't have a app id for ios. and haven't set
   @override
   Widget build(BuildContext context) {
     return loading
-        ? LoadingSpinner()
+        ? LoadingScreen()
         : Scaffold(
             appBar: AppBar(
               title: Text('Passwordless Login'),
