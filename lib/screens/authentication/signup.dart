@@ -79,7 +79,7 @@ class _SignupState extends State<Signup> {
                       key: _authFormKey,
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 40),
-                        height: 300,
+                        height: 330,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -157,6 +157,7 @@ class _SignupState extends State<Signup> {
                               error,
                               style: TextStyle(color: Colors.red),
                             ),
+                            Container()
                           ],
                         ),
                       ),
