@@ -12,7 +12,7 @@ class Authenticate extends StatefulWidget {
 class _AuthenticateState extends State<Authenticate> {
   // bool showSignupScreen = false;
 
-  LoginMethod _loginMethod = LoginMethod.signupWithEmailAndPassword;
+  LoginMethod _loginMethod = LoginMethod.loginWithEmailAndPasssword;
 
   // void toggleSignup() {
   //   // print(showSignupScreen.toString());

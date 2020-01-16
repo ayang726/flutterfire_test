@@ -51,124 +51,132 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [const Color(0xFF0078A2), const Color(0xFF83E1B8)]),
-              ),
-              child: ConstrainedBox(
-                constraints:
-                    BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                child: Column(
-                  children: [
-                    Padding(
-                      child: Image(
-                        image: AssetImage("assets/images/veralogo.png"),
-                        fit: BoxFit.contain,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 100.0, vertical: 40.0),
+    return loading
+        ? LoadingSpinner()
+        : LayoutBuilder(
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return Scaffold(
+                body: SingleChildScrollView(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            const Color(0xFF0078A2),
+                            const Color(0xFF83E1B8)
+                          ]),
                     ),
-                    Form(
-                      key: _authFormKey,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        height: 330,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            InputTextFormField(
-                              enable: true,
-                              labelText: 'Email',
-                              focusNode: _emailFocusNode,
-                              onChange: (value) {
-                                setState(() {
-                                  email = value;
-                                });
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              onFieldSubmitted: (value) {
-                                FocusScope.of(context)
-                                    .requestFocus(_passwordFocusNode);
-                              },
-                              textInputAction: TextInputAction.next,
-                              validator: (value) => value.isEmpty
-                                  ? "Email cannot be empty"
-                                  : null,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: Column(
+                        children: [
+                          Padding(
+                            child: Image(
+                              image: AssetImage("assets/images/veralogo.png"),
+                              fit: BoxFit.contain,
                             ),
-                            InputTextFormField(
-                              enable: true,
-                              labelText: 'Password',
-                              focusNode: _passwordFocusNode,
-                              obscureText: true,
-                              onChange: (value) {
-                                setState(() {
-                                  password = value;
-                                });
-                              },
-                              onFieldSubmitted: (_) {
-                                FocusScope.of(context)
-                                    .requestFocus(_nameFocusNode);
-                              },
-                              textInputAction: TextInputAction.next,
-                              validator: (value) => value.length < 6
-                                  ? "Password must be longer than 6 characters"
-                                  : null,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 100.0, vertical: 40.0),
+                          ),
+                          Form(
+                            key: _authFormKey,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 40),
+                              height: 330,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  InputTextFormField(
+                                    enable: true,
+                                    labelText: 'Email',
+                                    focusNode: _emailFocusNode,
+                                    onChange: (value) {
+                                      setState(() {
+                                        email = value;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    onFieldSubmitted: (value) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_passwordFocusNode);
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) => value.isEmpty
+                                        ? "Email cannot be empty"
+                                        : null,
+                                  ),
+                                  InputTextFormField(
+                                    enable: true,
+                                    labelText: 'Password',
+                                    focusNode: _passwordFocusNode,
+                                    obscureText: true,
+                                    onChange: (value) {
+                                      setState(() {
+                                        password = value;
+                                      });
+                                    },
+                                    onFieldSubmitted: (_) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_nameFocusNode);
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) => value.length < 6
+                                        ? "Password must be longer than 6 characters"
+                                        : null,
+                                  ),
+                                  InputTextFormField(
+                                    enable: true,
+                                    labelText: "Name",
+                                    focusNode: _nameFocusNode,
+                                    onChange: (value) {
+                                      setState(() {
+                                        name = value;
+                                      });
+                                    },
+                                    onFieldSubmitted: (_) => {_handleSignup()},
+                                    textInputAction: TextInputAction.done,
+                                    validator: (value) => value.isEmpty
+                                        ? "Name must not be empty"
+                                        : null,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      AuthBtn(
+                                        text: 'Sign Up',
+                                        btnColor: Colors.white,
+                                        textColor: const Color(0xFF0078A2),
+                                        onPressed: _handleSignup,
+                                      ),
+                                      AuthBtn(
+                                        text: 'Log In',
+                                        btnColor: const Color(0xFF0078A2),
+                                        textColor: Colors.white,
+                                        onPressed: _handleLogin,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    error,
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  Container()
+                                ],
+                              ),
                             ),
-                            InputTextFormField(
-                              enable: true,
-                              labelText: "Name",
-                              focusNode: _nameFocusNode,
-                              onChange: (value) {
-                                setState(() {
-                                  name = value;
-                                });
-                              },
-                              onFieldSubmitted: (_) => {_handleSignup()},
-                              textInputAction: TextInputAction.done,
-                              validator: (value) => value.isEmpty
-                                  ? "Name must not be empty"
-                                  : null,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                AuthBtn(
-                                  text: 'Sign Up',
-                                  btnColor: Colors.white,
-                                  textColor: const Color(0xFF0078A2),
-                                  onPressed: _handleSignup,
-                                ),
-                                AuthBtn(
-                                  text: 'Log In',
-                                  btnColor: const Color(0xFF0078A2),
-                                  textColor: Colors.white,
-                                  onPressed: _handleLogin,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              error,
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            Container()
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 }
