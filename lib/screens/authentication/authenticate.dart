@@ -57,7 +57,7 @@ class _AuthenticateState extends State<Authenticate> {
         // case LoginMethod.passwordlessLogin:
         //   return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
         case LoginMethod.resetPassword:
-          return ResetPassword(goToAuthMethod: gotoAuthScreen);
+          return ResetPassword(navigateTo: gotoAuthScreen);
           break;
       }
     }

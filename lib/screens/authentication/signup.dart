@@ -165,7 +165,6 @@ class _SignupState extends State<Signup> {
                                     error,
                                     style: TextStyle(color: Colors.red),
                                   ),
-                                  Container()
                                 ],
                               ),
                             ),
