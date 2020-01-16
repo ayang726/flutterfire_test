@@ -173,19 +173,28 @@ class _LoginState extends State<Login> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: AssetImage('assets/images/fblogo.png'),
-                                  fit: BoxFit.contain,
-                                  width: 70,
+                                child: FlatButton(
+                                  onPressed: () =>
+                                      print("Facebook Log In Pressed"),
+                                  child: Image(
+                                    image:
+                                        AssetImage('assets/images/fblogo.png'),
+                                    fit: BoxFit.contain,
+                                    width: 70,
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/googlelogo.png'),
-                                  fit: BoxFit.contain,
-                                  width: 70,
+                                child: FlatButton(
+                                  onPressed: () =>
+                                      print('Google Sign In Pressed'),
+                                  child: Image(
+                                    image: AssetImage(
+                                        'assets/images/googlelogo.png'),
+                                    fit: BoxFit.contain,
+                                    width: 70,
+                                  ),
                                 ),
                               ),
                             ],

@@ -85,7 +85,7 @@ class _SignupState extends State<Signup> {
                             key: _authFormKey,
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 40),
-                              height: 330,
+                              height: 350,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
