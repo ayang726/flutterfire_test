@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
-import 'package:flutterfire_test/widgets/spinner.dart';
+import 'package:flutterfire_test/widgets/loading.dart';
 
 import 'authBtn.dart';
 import 'authenticate.dart';
@@ -52,7 +52,7 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? LoadingSpinner()
+        ? LoadingScreen()
         : LayoutBuilder(
             builder:
                 (BuildContext context, BoxConstraints viewportConstraints) {
@@ -85,7 +85,7 @@ class _SignupState extends State<Signup> {
                             key: _authFormKey,
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 40),
-                              height: 330,
+                              height: 350,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -150,12 +150,12 @@ class _SignupState extends State<Signup> {
                                       AuthBtn(
                                         text: 'Sign Up',
                                         btnColor: Colors.white,
-                                        textColor: const Color(0xFF0078A2),
+                                        textColor: const Color(0xFF3FABAD),
                                         onPressed: _handleSignup,
                                       ),
                                       AuthBtn(
                                         text: 'Log In',
-                                        btnColor: const Color(0xFF0078A2),
+                                        btnColor: const Color(0xFF3FABAD),
                                         textColor: Colors.white,
                                         onPressed: _handleLogin,
                                       ),

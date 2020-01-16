@@ -3,7 +3,7 @@ import 'package:flutterfire_test/screens/authentication/authBtn.dart';
 import 'package:flutterfire_test/screens/authentication/authenticate.dart';
 import 'package:flutterfire_test/screens/authentication/inputTextFormField.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
-import 'package:flutterfire_test/widgets/spinner.dart';
+import 'package:flutterfire_test/widgets/loading.dart';
 
 class Login extends StatefulWidget {
   final Function navigateTo;
@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? LoadingSpinner()
+        ? LoadingScreen()
         : LayoutBuilder(
             builder:
                 (BuildContext context, BoxConstraints viewportConstraints) {
@@ -140,14 +140,14 @@ class _LoginState extends State<Login> {
                                     children: <Widget>[
                                       AuthBtn(
                                         text: 'Sign Up',
-                                        btnColor: const Color(0xFF0078A2),
+                                        btnColor: const Color(0xFF3FABAD),
                                         textColor: Colors.white,
                                         onPressed: _handleSignup,
                                       ),
                                       AuthBtn(
                                         text: 'Log In',
                                         btnColor: Colors.white,
-                                        textColor: const Color(0xFF0078A2),
+                                        textColor: const Color(0xFF3FABAD),
                                         onPressed: _handleLogIn,
                                       ),
                                     ],
@@ -173,19 +173,28 @@ class _LoginState extends State<Login> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: AssetImage('assets/images/fblogo.png'),
-                                  fit: BoxFit.contain,
-                                  width: 70,
+                                child: FlatButton(
+                                  onPressed: () =>
+                                      print("Facebook Log In Pressed"),
+                                  child: Image(
+                                    image:
+                                        AssetImage('assets/images/fblogo.png'),
+                                    fit: BoxFit.contain,
+                                    width: 70,
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/googlelogo.png'),
-                                  fit: BoxFit.contain,
-                                  width: 70,
+                                child: FlatButton(
+                                  onPressed: () =>
+                                      print('Google Sign In Pressed'),
+                                  child: Image(
+                                    image: AssetImage(
+                                        'assets/images/googlelogo.png'),
+                                    fit: BoxFit.contain,
+                                    width: 70,
+                                  ),
                                 ),
                               ),
                             ],

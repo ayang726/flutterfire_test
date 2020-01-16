@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
             // is not restarted.
             primaryColor: const Color(0xFF0078A2),
             accentColor: Colors.white,
+            fontFamily: 'Roboto',
           ),
           home: AuthWrapper(),
         ),
