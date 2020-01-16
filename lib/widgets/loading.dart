@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoadingScreen extends StatelessWidget {
   @override
@@ -25,10 +26,9 @@ class LoadingScreen extends StatelessWidget {
               ),
               Text(
                 'Vera',
-                style: TextStyle(
-                    fontSize: 150.0,
+                style: GoogleFonts.comfortaa(
+                    fontSize: 96.0,
                     color: Colors.white,
-                    fontFamily: 'Comfortaa',
                     fontWeight: FontWeight.w400),
               ),
               Spacer(flex: 7),
