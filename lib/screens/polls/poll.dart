@@ -77,7 +77,11 @@ class _PollState extends State<Poll> {
               totalVoters: totalVoters,
               onOptionPressed: _handleOptionPressed,
             ),
-            Divider(color: Colors.transparent),
+            if (!voted) Divider(color: Colors.transparent),
+            if (voted) Text(
+              'Thanks for participating!',
+              style: TextStyle(fontWeight: FontWeight.bold)
+            ),
             Row(
               children: <Widget>[
                 Text('Curious about something?'),
