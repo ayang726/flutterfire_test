@@ -71,45 +71,41 @@ class _ResetPassword extends State<ResetPassword> {
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(50),
-            child: Form(
-              key: _resetPasswordFormKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      setState(() {
-                        email = value;
-                      });
-                    },
-                    onFieldSubmitted: (_) => {_handleResetPassword()},
-                    textInputAction: TextInputAction.send,
-                    validator: (value) =>
-                        value.isEmpty ? "Email cannot be empty" : null,
-                  ),
-                  Text(
-                    error,
-                    style: TextStyle(color: Colors.red, height: 2),
-                    textAlign: TextAlign.left,
-                  ),
-                  RaisedButton(
-                    child: Text('Email me a recovery link'),
-                    onPressed: _handleResetPassword,
-                    
-                  )
-                ]
+      body: Container(
+        padding: EdgeInsets.all(50),
+        child: Form(
+          key: _resetPasswordFormKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                autocorrect: false,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                },
+                onFieldSubmitted: (_) => {_handleResetPassword()},
+                textInputAction: TextInputAction.send,
+                validator: (value) =>
+                    value.isEmpty ? "Email cannot be empty" : null,
+              ),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, height: 2),
+                textAlign: TextAlign.left,
+              ),
+              RaisedButton(
+                child: Text('Email me a recovery link'),
+                onPressed: _handleResetPassword,
+                
               )
-            )
+            ]
           )
-        ],
+        )
       )
     );
   }
