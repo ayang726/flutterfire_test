@@ -2,30 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_test/services/firebaseAuth.dart';
 import 'package:flutterfire_test/widgets/spinner.dart';
 
+import 'authBtn.dart';
 import 'authenticate.dart';
+import 'inputTextFormField.dart';
 
-class SignUp extends StatefulWidget {
-  final Function gotoAuthMethod;
-  SignUp({this.gotoAuthMethod});
+class Signup extends StatefulWidget {
+  final Function navigateTo;
+  Signup({this.navigateTo});
 
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignupState createState() => _SignupState();
 }
 
-class _SignUpState extends State<SignUp> {
-  var name = '';
+class _SignupState extends State<Signup> {
+  var name = "";
   var email = '';
   var password = '';
   var error = '';
   var loading = false;
-  // var formIsValid = false;
 
-  final _nameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+  final _nameFocusNode = FocusNode();
 
-  final AuthService _auth = AuthService();
+  AuthService _auth = AuthService();
   final _authFormKey = GlobalKey<FormState>();
+
+  void _handleLogin() {
+    widget.navigateTo(LoginMethod.loginWithEmailAndPasssword);
+  }
 
   void _handleSignup() {
     if (_authFormKey.currentState.validate()) {
@@ -44,111 +49,125 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  void _handleSigninAnon() {
-    setState(() {
-      loading = true;
-    });
-    _auth.signInAnonymous().then(print).catchError((e) {
-      setState(() {
-        loading = false;
-        error = e.message;
-      });
-      print('login error: $e.toString()');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? LoadingSpinner()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('Sign Up'),
-              // backgroundColor: Colors.green,
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Log In'),
-                  onPressed: () => widget
-                      .gotoAuthMethod(LoginMethod.loginWithEmailAndPasssword),
-                ),
-              ],
-            ),
-            body: Container(
-              padding: EdgeInsets.all(50),
-              child: Form(
-                key: _authFormKey,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [const Color(0xFF0078A2), const Color(0xFF83E1B8)]),
+              ),
+              child: ConstrainedBox(
+                constraints:
+                    BoxConstraints(minHeight: viewportConstraints.maxHeight),
                 child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
+                  children: [
+                    Padding(
+                      child: Image(
+                        image: AssetImage("assets/images/veralogo.png"),
+                        fit: BoxFit.contain,
                       ),
-                      focusNode: _nameFocusNode,
-                      onChanged: (value) {
-                        setState(() {
-                          name = value;
-                        });
-                      },
-                      onFieldSubmitted: (_) => FocusScope.of(context)
-                          .requestFocus(_emailFocusNode),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) =>
-                          value.isEmpty ? "Name cannot be empty" : null,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100.0, vertical: 40.0),
                     ),
-                    TextFormField(
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
+                    Form(
+                      key: _authFormKey,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 40),
+                        height: 300,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            InputTextFormField(
+                              enable: true,
+                              labelText: 'Email',
+                              focusNode: _emailFocusNode,
+                              onChange: (value) {
+                                setState(() {
+                                  email = value;
+                                });
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(_passwordFocusNode);
+                              },
+                              textInputAction: TextInputAction.next,
+                              validator: (value) => value.isEmpty
+                                  ? "Email cannot be empty"
+                                  : null,
+                            ),
+                            InputTextFormField(
+                              enable: true,
+                              labelText: 'Password',
+                              focusNode: _passwordFocusNode,
+                              obscureText: true,
+                              onChange: (value) {
+                                setState(() {
+                                  password = value;
+                                });
+                              },
+                              onFieldSubmitted: (_) {
+                                FocusScope.of(context)
+                                    .requestFocus(_nameFocusNode);
+                              },
+                              textInputAction: TextInputAction.next,
+                              validator: (value) => value.length < 6
+                                  ? "Password must be longer than 6 characters"
+                                  : null,
+                            ),
+                            InputTextFormField(
+                              enable: true,
+                              labelText: "Name",
+                              focusNode: _nameFocusNode,
+                              onChange: (value) {
+                                setState(() {
+                                  name = value;
+                                });
+                              },
+                              onFieldSubmitted: (_) => {_handleSignup()},
+                              textInputAction: TextInputAction.done,
+                              validator: (value) => value.isEmpty
+                                  ? "Name must not be empty"
+                                  : null,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                AuthBtn(
+                                  text: 'Sign Up',
+                                  btnColor: Colors.white,
+                                  textColor: const Color(0xFF0078A2),
+                                  onPressed: _handleSignup,
+                                ),
+                                AuthBtn(
+                                  text: 'Log In',
+                                  btnColor: const Color(0xFF0078A2),
+                                  textColor: Colors.white,
+                                  onPressed: _handleLogin,
+                                ),
+                              ],
+                            ),
+                            Text(
+                              error,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ],
+                        ),
                       ),
-                      focusNode: _emailFocusNode,
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) {
-                        setState(() {
-                          email = value;
-                          // formIsValid = _authFormKey.currentState.validate();
-                        });
-                      },
-                      onFieldSubmitted: (_) => FocusScope.of(context)
-                          .requestFocus(_passwordFocusNode),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) =>
-                          value.isEmpty ? "Email cannot be empty" : null,
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                      ),
-                      focusNode: _passwordFocusNode,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      onChanged: (value) {
-                        setState(() {
-                          password = value;
-                          // formIsValid = _authFormKey.currentState.validate();
-                        });
-                      },
-                      onFieldSubmitted: (_) => _handleSignup,
-                      textInputAction: TextInputAction.send,
-                      validator: (value) => value.length < 6
-                          ? "Password must be 6 characters or more"
-                          : null,
-                    ),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    RaisedButton(
-                        child: Text('Submit'), onPressed: _handleSignup),
                   ],
                 ),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.link_off),
-              tooltip: 'Sign in Anonymously',
-              onPressed: _handleSigninAnon,
-            ),
-          );
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfire_test/screens/authentication/login.dart';
-import 'package:flutterfire_test/screens/authentication/passwordlessSignin.dart';
+// import 'package:flutterfire_test/screens/authentication/passwordlessSignin.dart';
 import 'package:flutterfire_test/screens/authentication/resetPassword.dart';
 import 'package:flutterfire_test/screens/authentication/signup.dart';
+import 'login.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -12,45 +12,54 @@ class Authenticate extends StatefulWidget {
 class _AuthenticateState extends State<Authenticate> {
   // bool showSignupScreen = false;
 
-  LoginMethod loginMethod = LoginMethod.loginWithEmailAndPasssword;
+  LoginMethod _loginMethod = LoginMethod.signupWithEmailAndPassword;
 
-  void toggleSignup() {
-    // print(showSignupScreen.toString());
-    setState(() => {
-          if (loginMethod == LoginMethod.loginWithEmailAndPasssword)
-            {loginMethod = LoginMethod.signupWithEmailAndPassword}
-          else if (loginMethod == LoginMethod.signupWithEmailAndPassword)
-            {loginMethod = LoginMethod.loginWithEmailAndPasssword}
-        });
-  }
+  // void toggleSignup() {
+  //   // print(showSignupScreen.toString());
+  //   setState(() => {
+  //         if (loginMethod == LoginMethod.loginWithEmailAndPasssword)
+  //           {loginMethod = LoginMethod.signupWithEmailAndPassword}
+  //         else if (loginMethod == LoginMethod.signupWithEmailAndPassword)
+  //           {loginMethod = LoginMethod.loginWithEmailAndPasssword}
+  //       });
+  // }
 
-  void togglePasswordlessLogin() {
+  // void togglePasswordlessLogin() {
+  //   setState(() {
+  //     if (loginMethod != LoginMethod.passwordlessLogin) {
+  //       loginMethod = LoginMethod.passwordlessLogin;
+  //     } else {
+  //       loginMethod = LoginMethod.loginWithEmailAndPasssword;
+  //     }
+  //   });
+  // }
+
+  void gotoAuthScreen(LoginMethod method) {
     setState(() {
-      if (loginMethod != LoginMethod.passwordlessLogin) {
-        loginMethod = LoginMethod.passwordlessLogin;
-      } else {
-        loginMethod = LoginMethod.loginWithEmailAndPasssword;
-      }
+      _loginMethod = method;
     });
   }
 
-  void gotoAuthScreenWith(LoginMethod method) {
-    setState(() {
-      loginMethod = method;
-    });
-  }
-
+  final V2 = true;
   @override
   Widget build(BuildContext context) {
-    switch (loginMethod) {
-      case LoginMethod.signupWithEmailAndPassword:
-        return SignUp(gotoAuthMethod: gotoAuthScreenWith);
-      case LoginMethod.loginWithEmailAndPasssword:
-        return LogIn(gotoAuthMethod: gotoAuthScreenWith);
-      case LoginMethod.passwordlessLogin:
-        return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
-      case LoginMethod.resetPassword:
-        return ResetPassword(goToAuthMethod: gotoAuthScreenWith);
+    if (V2) {
+      return Login();
+    } else {
+      switch (_loginMethod) {
+        case LoginMethod.signupWithEmailAndPassword:
+          return Signup(navigateTo: gotoAuthScreen);
+          break;
+        case LoginMethod.loginWithEmailAndPasssword:
+          return Login(navigateTo: gotoAuthScreen);
+          break;
+
+        // case LoginMethod.passwordlessLogin:
+        //   return PasswordlessLogin(gotoAuthMethod: gotoAuthScreenWith);
+        case LoginMethod.resetPassword:
+          return ResetPassword(goToAuthMethod: gotoAuthScreen);
+          break;
+      }
     }
   }
 }
@@ -58,6 +67,6 @@ class _AuthenticateState extends State<Authenticate> {
 enum LoginMethod {
   signupWithEmailAndPassword,
   loginWithEmailAndPasssword,
-  passwordlessLogin,
+  // passwordlessLogin,
   resetPassword
 }
