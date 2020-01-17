@@ -174,8 +174,7 @@ class _LoginState extends State<Login> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: FlatButton(
-                                  onPressed: () =>
-                                      print("Facebook Log In Pressed"),
+                                  onPressed: () => _auth.facebookSignin(),
                                   child: Image(
                                     image:
                                         AssetImage('assets/images/fblogo.png'),
@@ -187,8 +186,7 @@ class _LoginState extends State<Login> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: FlatButton(
-                                  onPressed: () =>
-                                      print('Google Sign In Pressed'),
+                                  onPressed: () => _auth.googleSignin(),
                                   child: Image(
                                     image: AssetImage(
                                         'assets/images/googlelogo.png'),
