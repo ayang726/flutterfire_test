@@ -13,9 +13,11 @@ class _PollState extends State<Poll> {
   var date = '01.14.2020';
   List<String> tags = ['Budgeting', 'Saving'];
   var question = 'How much of your income do you put into your savings?';
-  Map<String, BigInt> options = {'Less than 40%': BigInt.from(75),
-                 'Between 40% - 80%': BigInt.from(150), 
-                 'More than 80%': BigInt.from(75)};
+  Map<String, BigInt> options = {
+    'Less than 40%': BigInt.from(75),
+    'Between 40% - 80%': BigInt.from(150),
+    'More than 80%': BigInt.from(75)
+  };
   BigInt totalVoters = BigInt.from(300);
 
   var voted = false;
@@ -24,10 +26,7 @@ class _PollState extends State<Poll> {
     print('User voted for $option: ${options[option]}');
     options.update(option, (val) => val + BigInt.one);
     print('New value ${options[option]}');
-    setState(() => { 
-      voted = true,
-      totalVoters = totalVoters + BigInt.one
-    });
+    setState(() => {voted = true, totalVoters = totalVoters + BigInt.one});
   }
 
   @override
@@ -45,51 +44,44 @@ class _PollState extends State<Poll> {
               'Daily Insights',
               style: TextStyle(color: Colors.blue, fontSize: 40),
             ),
-            // date | tags            
+            // date | tags
             Row(
               children: <Widget>[
-                Text(
-                  date,
-                  style: TextStyle(fontWeight: FontWeight.bold)
-                ),
+                Text(date, style: TextStyle(fontWeight: FontWeight.bold)),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: VerticalDivider(
-                    color: Colors.black, 
-                    thickness: 1,
-                  ), 
-                  height: 30
-                ),
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    child: VerticalDivider(
+                      color: Colors.black,
+                      thickness: 1,
+                    ),
+                    height: 30),
                 Tags(tags: this.tags),
               ],
             ),
             Divider(color: Colors.transparent),
             // question
-            Text(
-              question,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-            ),
+            Text(question,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             Divider(color: Colors.transparent),
             // options
             Options(
-              options: this.options, 
+              options: this.options,
               voted: this.voted,
               totalVoters: totalVoters,
               onOptionPressed: _handleOptionPressed,
             ),
             Divider(color: Colors.transparent),
-            Row(
-              children: <Widget>[
-                Text('Curious about something?'),
-                FlatButton(
-                  child: Text(
-                    'Submit your own!', 
-                    style: TextStyle(color: Colors.blue)
-                  ),
-                  // TODO: onPressed: route to poll question submission
-                  onPressed: () => print('Question submitted')
-                )
-              ],
+            Flexible(
+              child: Row(
+                children: <Widget>[
+                  Text('Curious about something?'),
+                  FlatButton(
+                      child: Text('Submit your own!',
+                          style: TextStyle(color: Colors.blue)),
+                      // TODO: onPressed: route to poll question submission
+                      onPressed: () => print('Question submitted'))
+                ],
+              ),
             )
           ],
         ),
