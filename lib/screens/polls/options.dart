@@ -14,19 +14,11 @@ class Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return voted ? 
-    Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: options.keys.map((String option) {
-        return OptionWithVoters(option: option, voters: options[option], voterPercent: options[option] / totalVoters);
-      }).toList(),
-    )
-    : Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: options.keys.map((String option) {
-        // return option render
-        // TODO: make different option renders depending on whether user voted or not
-        return OptionWithoutVoters(option: option, onOptionPressed: (option) => onOptionPressed(option));
+        return voted ? OptionWithVoters(option: option, voters: options[option], voterPercent: options[option] / totalVoters)
+              : OptionWithoutVoters(option: option, onOptionPressed: (option) => onOptionPressed(option));
       }).toList(),
     );
   }

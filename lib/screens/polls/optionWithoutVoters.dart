@@ -18,14 +18,18 @@ class OptionWithoutVoters extends StatelessWidget {
       child: OutlineButton(
         child: Align(
           alignment: Alignment.centerLeft,
-          child: Text(option),
+          child: Text(
+            option,
+            style: TextStyle(fontSize: 18)
+          ),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         borderSide: BorderSide(color: Colors.blue),
         // TODO: onPressed
         onPressed: () => onOptionPressed(option)
-      )
+      ),
+      height: 90,
     );
   }
 }

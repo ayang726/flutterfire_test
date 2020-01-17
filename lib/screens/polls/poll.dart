@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfire_test/services/firebaseAuth.dart';
 
 import 'options.dart';
 import 'tags.dart';
@@ -9,6 +10,9 @@ class Poll extends StatefulWidget {
 }
 
 class _PollState extends State<Poll> {
+  final AuthService _auth = AuthService();
+  var voted = false;
+
   // dummy values
   var date = '01.14.2020';
   List<String> tags = ['Budgeting', 'Saving'];
@@ -20,8 +24,6 @@ class _PollState extends State<Poll> {
   };
   BigInt totalVoters = BigInt.from(300);
 
-  var voted = false;
-
   void _handleOptionPressed(String option) {
     print('User voted for $option: ${options[option]}');
     options.update(option, (val) => val + BigInt.one);
@@ -29,11 +31,23 @@ class _PollState extends State<Poll> {
     setState(() => {voted = true, totalVoters = totalVoters + BigInt.one});
   }
 
+  void _handleLogout() {
+    print('Signing out');
+    _auth.logout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Polls'),
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('Log Out'),
+            onPressed: _handleLogout,
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(50),
@@ -49,12 +63,17 @@ class _PollState extends State<Poll> {
               children: <Widget>[
                 Text(date, style: TextStyle(fontWeight: FontWeight.bold)),
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    child: VerticalDivider(
-                      color: Colors.black,
-                      thickness: 1,
-                    ),
-                    height: 30),
+
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: VerticalDivider(
+                    color: Colors.black, 
+                    thickness: 1,
+                  ), 
+                  height: 30
+                ),
+                // TODO: Figure out a better way to do these tags so they overflow nicely
+                // also see tags.dart for this
+
                 Tags(tags: this.tags),
               ],
             ),
@@ -70,18 +89,29 @@ class _PollState extends State<Poll> {
               totalVoters: totalVoters,
               onOptionPressed: _handleOptionPressed,
             ),
-            Divider(color: Colors.transparent),
-            Flexible(
-              child: Row(
-                children: <Widget>[
-                  Text('Curious about something?'),
-                  FlatButton(
-                      child: Text('Submit your own!',
-                          style: TextStyle(color: Colors.blue)),
-                      // TODO: onPressed: route to poll question submission
-                      onPressed: () => print('Question submitted'))
-                ],
-              ),
+
+            if (!voted) Divider(color: Colors.transparent),
+            if (voted) Text(
+              'Thanks for participating!',
+              style: TextStyle(fontWeight: FontWeight.bold)
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text('Curious about something?')
+                ),
+                Expanded(
+                  child: FlatButton(
+                    child: Text(
+                      'Submit your own!', 
+                      style: TextStyle(color: Colors.blue)
+                    ),
+                    // TODO: onPressed: route to poll question submission
+                    onPressed: () => print('Question submitted')
+                  )
+                ),
+              ],
+
             )
           ],
         ),
