@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfire_test/services/firebaseAuth.dart';
 
 import 'options.dart';
 import 'tags.dart';
@@ -9,6 +10,9 @@ class Poll extends StatefulWidget {
 }
 
 class _PollState extends State<Poll> {
+  final AuthService _auth = AuthService();
+  var voted = false;
+
   // dummy values
   var date = '01.14.2020';
   List<String> tags = ['Budgeting', 'Saving'];
@@ -17,8 +21,6 @@ class _PollState extends State<Poll> {
                  'Between 40% - 80%': BigInt.from(150), 
                  'More than 80%': BigInt.from(75)};
   BigInt totalVoters = BigInt.from(300);
-
-  var voted = false;
 
   void _handleOptionPressed(String option) {
     print('User voted for $option: ${options[option]}');
@@ -30,11 +32,23 @@ class _PollState extends State<Poll> {
     });
   }
 
+  void _handleLogout() {
+    print('Signing out');
+    _auth.logout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Polls'),
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('Log Out'),
+            onPressed: _handleLogout,
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(50),
@@ -60,6 +74,8 @@ class _PollState extends State<Poll> {
                   ), 
                   height: 30
                 ),
+                // TODO: Figure out a better way to do these tags so they overflow nicely
+                // also see tags.dart for this
                 Tags(tags: this.tags),
               ],
             ),
@@ -84,15 +100,19 @@ class _PollState extends State<Poll> {
             ),
             Row(
               children: <Widget>[
-                Text('Curious about something?'),
-                FlatButton(
-                  child: Text(
-                    'Submit your own!', 
-                    style: TextStyle(color: Colors.blue)
-                  ),
-                  // TODO: onPressed: route to poll question submission
-                  onPressed: () => print('Question submitted')
-                )
+                Expanded(
+                  child: Text('Curious about something?')
+                ),
+                Expanded(
+                  child: FlatButton(
+                    child: Text(
+                      'Submit your own!', 
+                      style: TextStyle(color: Colors.blue)
+                    ),
+                    // TODO: onPressed: route to poll question submission
+                    onPressed: () => print('Question submitted')
+                  )
+                ),
               ],
             )
           ],

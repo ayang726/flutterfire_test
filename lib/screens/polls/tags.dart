@@ -13,9 +13,7 @@ class Tags extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: this.tags.map((String tag) {
-        return Tag(
-          tag: tag
-        );
+        return Tag(tag: tag);
       }).toList()
     );
   }
